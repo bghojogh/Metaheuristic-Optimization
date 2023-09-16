@@ -1,0 +1,4 @@
+cost_function: schwefel    # options for cost function: sphere, schwefel
+max_itr: 1000
+x_initial: [1.0, -1.0]    # if null, the x_initial will be a random point in the domain
+convergence_threshold: 0.01
