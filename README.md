@@ -1,2 +1,2 @@
-# Adaptive-Cooperative-Algorithms
-The codes for the course ECE457A
+# Metaheuristic Optimization
+The codes for metaheuristic optimization algorithms.
