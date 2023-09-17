@@ -6,5 +6,7 @@ def sphere(x):
 
 def schwefel(x):
     d = len(x)
-    x1, x2 = x[:2]
-    return (418.9829 * d - (x1 * (np.sin(np.sqrt(np.abs(x1)))) + (x2 * np.sin(np.sqrt(np.abs(x2))))))
+    f = 418.9829 * d
+    for xi in x:
+        f = f - (xi * np.sin(np.sqrt(np.abs(xi))))
+    return f

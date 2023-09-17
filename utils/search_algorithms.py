@@ -1,10 +1,15 @@
 import random
 import numpy as np
 from tqdm import tqdm
-from typing import Tuple, List, Callable
+from typing import Tuple, List, Callable, Optional
 
 
-def local_search(cost_function: Callable, x_initial: np.array, max_itr: int, convergence_threshold: float) -> Tuple[np.array, float, List[np.array], List[float]]:
+def local_search(cost_function: Callable, max_itr: int, convergence_threshold: float, 
+                 x_initial: Optional[np.array] = None, x_range: Optional[List[List[float]]] = None) -> Tuple[np.array, float, List[np.array], List[float]]:
+    # set the x_initial:
+    if x_initial is None:
+        x_initial = [random.uniform(x_range[i][0], x_range[i][1]) for i in range(len(x_range))]
+
     x_current = x_initial
     cost_current = cost_function(x_current)
 
