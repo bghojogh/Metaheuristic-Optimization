@@ -1,4 +1,20 @@
-cost_function: griewank    # options for cost function: sphere, schwefel, schaffer, griewank
-max_itr: 10000
-x_initial: null    # a d-dimensional list, such as [1.0, -1.0], or null. If null, the x_initial will be a random point in the domain
-convergence_threshold: 0.01
+search_algorithm: simulated_annealing  # Options: local_search, iterative_local_search, simulated_annealing
+cost_function: func11  # Options for cost function: sphere, schwefel, schaffer, griewank, func7, func8, func9, func11
+dimension: 2
+x_initial: null  # A d-dimensional list, such as [1.0, -1.0], or null. If null, the x_initial will be a random point in the domain.
+
+local_search:
+  max_itr: 1000
+  convergence_threshold: 0.01
+
+iterative_local_search:
+  max_itr_ils: 10  # Max iterations for iterative local search (outer loop)
+  max_itr_ls: 100  # Max iterations for local search (inner loop)
+  convergence_threshold: 0.01
+
+simulated_annealing:
+  max_itr: 50
+  temperature: 3
+  alpha: 0.1
+  beta: 0.9
+  temperature_decrement_method: 'linear'  # Options: linear, geometric, slow
