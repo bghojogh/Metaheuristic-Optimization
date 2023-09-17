@@ -10,6 +10,12 @@ def main(config: Dict) -> None:
     elif config['cost_function'] == 'schwefel':
         cost_function = cost_functions.schwefel
         x_range = [[-500, 500], [-500, 500]]  # the range for each dimension
+    elif config['cost_function'] == 'schaffer':
+        cost_function = cost_functions.schaffer
+        x_range = [[-100, 100], [-100, 100]]  # the range for each dimension
+    elif config['cost_function'] == 'griewank':
+        cost_function = cost_functions.griewank
+        x_range = [[-100, 100], [-100, 100]]  # the range for each dimension
 
     best_x, best_cost, x_history, cost_history = search_algorithms.local_search(cost_function=cost_function, max_itr=config['max_itr'], convergence_threshold=config['convergence_threshold'], 
                                                                                 x_initial=config['x_initial'], x_range=x_range)

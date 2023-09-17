@@ -1,4 +1,4 @@
-cost_function: schwefel    # options for cost function: sphere, schwefel
+cost_function: griewank    # options for cost function: sphere, schwefel, schaffer, griewank
 max_itr: 10000
 x_initial: null    # a d-dimensional list, such as [1.0, -1.0], or null. If null, the x_initial will be a random point in the domain
 convergence_threshold: 0.01
