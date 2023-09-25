@@ -1,16 +1,16 @@
-search_algorithm: simulated_annealing  # Options: local_search, iterative_local_search, simulated_annealing
-cost_function: func11  # Options for cost function: sphere, schwefel, schaffer, griewank, func7, func8, func9, func11
+search_algorithm: ga  # Options: local_search, iterative_local_search, simulated_annealing, pso, ga
+cost_function: schaffer  # Options: sphere, schwefel, schaffer, griewank, func7, func8, func9, func11
 dimension: 2
 x_initial: null  # A d-dimensional list, such as [1.0, -1.0], or null. If null, the x_initial will be a random point in the domain.
 
 local_search:
-  max_itr: 1000
+  max_itr: 100
   convergence_threshold: 0.01
 
 iterative_local_search:
   max_itr_ils: 10  # Max iterations for iterative local search (outer loop)
   max_itr_ls: 100  # Max iterations for local search (inner loop)
-  convergence_threshold: 0.01
+  convergence_threshold: 0.001
 
 simulated_annealing:
   max_itr: 50
@@ -18,3 +18,21 @@ simulated_annealing:
   alpha: 0.1
   beta: 0.9
   temperature_decrement_method: 'linear'  # Options: linear, geometric, slow
+
+pso:
+  max_itr: 500
+  num_particles: 10
+  alpha_1: 0.01
+  alpha_2: 0.01
+  alpha_3: 0.01
+  local_best_option: 'so_far'  # Options: this_iteration, so_far
+  global_best_option: 'so_far'  # Options: this_iteration, so_far
+  local_search:
+    max_itr: 100
+    convergence_threshold: 0.01
+
+ga:
+  max_itr: 500  # max_itr = number of generations - specifies how many times the GA will evolve the population
+  population_size: 10  # Number of individuals (candidate solutions) in each generation/iteration of the GA
+  mutation_rate: 0.1  # The probability that a new offspring will undergo mutation
+  crossover_rate: 0.8  # The probability that two selected individuals (parents) will undergo crossover to produce offspring

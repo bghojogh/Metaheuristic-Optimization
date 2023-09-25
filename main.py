@@ -47,12 +47,26 @@ def main(config: Dict) -> None:
                                                                                            beta=config['simulated_annealing']['beta'],
                                                                                            x_initial=config['x_initial'], x_range=x_range,
                                                                                            temperature_decrement_method=config['simulated_annealing']['temperature_decrement_method'])
+    elif config['search_algorithm'] == 'pso':
+        best_x, best_cost, x_history, cost_history, individuals = search_algorithms.pso(cost_function=cost_function, num_particles=config['pso']['num_particles'], max_itr=config['pso']['max_itr'],
+                                                                                        alpha_1=config['pso']['alpha_1'], alpha_2=config['pso']['alpha_2'], alpha_3=config['pso']['alpha_3'],
+                                                                                        x_initial=config['x_initial'], x_range=x_range,
+                                                                                        local_best_option=config['pso']['local_best_option'],
+                                                                                        global_best_option=config['pso']['global_best_option'],
+                                                                                        ls_max_itr=config['pso']['local_search']['max_itr'], ls_convergence_threshold=config['pso']['local_search']['convergence_threshold'])
+    elif config['search_algorithm'] == 'ga':
+        best_x, best_cost, x_history, cost_history, individuals = search_algorithms.ga(cost_function=cost_function, population_size=config['ga']['population_size'], max_itr=config['ga']['max_itr'],
+                                                                                       mutation_rate=config['ga']['mutation_rate'], crossover_rate=config['ga']['crossover_rate'], x_initial=config['x_initial'],
+                                                                                       x_range=x_range)
 
     if len(best_x) == 2: 
         # If the dimensionality is 2, visualize the results.
         plot_utils.plot_results(best_x=best_x, best_cost=best_cost,
                                 x_history=x_history, cost_history=cost_history,
                                 cost_function=cost_function, x_range=x_range)
+        if (config['search_algorithm'] == 'pso') or (config['search_algorithm'] == 'ga'):
+            plot_utils.plot_results_with_population(best_x=best_x, individuals=individuals,
+                                                    cost_function=cost_function, x_range=x_range)
 
 if __name__ == '__main__':
     with open('./config/config.yaml', 'r') as f:
