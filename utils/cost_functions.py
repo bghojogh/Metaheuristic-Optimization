@@ -80,3 +80,27 @@ def func11(x: List[float]) -> float:
         f2 = f2 + ((0.5**k) * np.cos(2 * np.pi * (3**k) * 0.5))
     f = f1 - (d * f2) + 90
     return f
+
+def func11(x: List[float]) -> float:
+    d = len(x)
+    f1 = 0
+    f2 = 0
+    for i in range(d):
+        f11 = 0
+        for k in range(21):
+            f11 = f11 + ((0.5**k) * np.cos(2 * np.pi * (3**k) * (x[i] + 0.5)))
+        f1 = f1 + f11
+    for k in range(21):
+        f2 = f2 + ((0.5**k) * np.cos(2 * np.pi * (3**k) * 0.5))
+    f = f1 - (d * f2) + 90
+    return f
+
+def revenue(x: List[float]) -> float:
+    if len(x) != 2:
+        raise ValueError()
+    else:
+        y = x[0]
+        z = x[1]
+        R = -(2 * y**2) - (3 * z**2) + (4 * y * z) + (10000 * y) + (16000 * z)
+        f = -R
+        return f

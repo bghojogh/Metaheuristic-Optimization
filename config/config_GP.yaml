@@ -1,0 +1,8 @@
+n_samples: 100
+n_dimensions: 5
+functions: ['addition', 'subtraction', 'multiplication', 'division']
+population: 400
+n_iterations: 20
+crossover_prob: 0.5
+mutation_prob: 0.2
+max_expression_depth: null  # null or a positive integer

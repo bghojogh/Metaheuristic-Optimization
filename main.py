@@ -29,6 +29,9 @@ def main(config: Dict) -> None:
     elif config['cost_function'] == 'func11':
         cost_function = cost_functions.func11
         x_range = [[-0.5, 0.5] for i in range(config['dimension'])]  # The range for each dimension
+    elif config['cost_function'] == 'revenue':
+        cost_function = cost_functions.revenue
+        x_range = [[0, 20000] for i in range(config['dimension'])]  # The range for each dimension (it must be 2 for this function)
 
     # Get the search algorithm
     if config['search_algorithm'] == 'local_search':
@@ -67,6 +70,10 @@ def main(config: Dict) -> None:
         if (config['search_algorithm'] == 'pso') or (config['search_algorithm'] == 'ga'):
             plot_utils.plot_results_with_population(best_x=best_x, individuals=individuals,
                                                     cost_function=cost_function, x_range=x_range)
+        
+        if config['cost_function'] == 'revenue':
+            print(f"Cost of trucks: {best_x[0]}")
+            print(f"Cost of sedans: {best_x[1]}")
 
 if __name__ == '__main__':
     with open('./config/config.yaml', 'r') as f:
