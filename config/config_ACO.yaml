@@ -1,0 +1,69 @@
+############ Example 1: Traveling Salesman Problem
+# vertices: [[0, 0], [1, 2], [2, 2], [2, 0], [1, 3], [1, 4], [3, 3], [5, 2]]
+# num_ants: 5
+# max_itr: 100
+# max_itr_ant: null  # If null, there is no max_itr_ant! ---> null for TSP
+# alpha: 0.1
+# beta: 0.3
+# pheromone_decay: 0.2
+# starting_vertex: 5  # If null, starting vertex will be random! ---> null or int for TSP
+# one_time_visit: True  # True for TSP
+# stopping_vertex: null  # null for TSP
+# visit_all_vertices: True  # True for TSP
+# TSP: True
+
+############ Example 2: Visit all vertices with starting and stopping vertices
+# vertices: [[0, 0], [1, 2], [2, 2], [2, 0], [1, 3], [1, 4], [3, 3], [5, 2]]
+# num_ants: 5
+# max_itr: 100
+# max_itr_ant: 100  # If null, there is no max_itr_ant! ---> null for TSP
+# alpha: 0.1
+# beta: 0.3
+# pheromone_decay: 0.2
+# starting_vertex: 5  # If null, starting vertex will be random! ---> null or int for TSP
+# one_time_visit: False  # True for TSP
+# stopping_vertex: 2  # null for TSP
+# visit_all_vertices: True  # True for TSP
+# TSP: False
+
+############ Example 3: Generalization of Triangle Inequality (with one time visit)
+# vertices: [[0, 0], [1, 2], [2, 2], [2, 0], [1, 3], [1, 4], [3, 3], [5, 2]]
+# num_ants: 5
+# max_itr: 100
+# max_itr_ant: 100  # If null, there is no max_itr_ant! ---> null for TSP
+# alpha: 0.1
+# beta: 0.3
+# pheromone_decay: 0.2
+# starting_vertex: 0  # If null, starting vertex will be random! ---> null or int for TSP
+# one_time_visit: True  # True for TSP
+# stopping_vertex: 7  # null for TSP
+# visit_all_vertices: False  # True for TSP
+# TSP: False
+
+############ Example 4: Generalization of Triangle Inequality (without one time visit)
+# vertices: [[0, 0], [1, 2], [2, 2], [2, 0], [1, 3], [1, 4], [3, 3], [5, 2]]
+# num_ants: 5
+# max_itr: 100
+# max_itr_ant: 100  # If null, there is no max_itr_ant! ---> null for TSP
+# alpha: 0.1
+# beta: 0.3
+# pheromone_decay: 0.2
+# starting_vertex: 5  # If null, starting vertex will be random! ---> null or int for TSP
+# one_time_visit: False  # True for TSP
+# stopping_vertex: 2  # null for TSP
+# visit_all_vertices: False  # True for TSP
+# TSP: False
+
+############ Example 5: Finding the closest point from the stopping vertex
+vertices: [[0, 0], [1, 2], [2, 2], [2, 0], [1, 3], [1, 4], [3, 3], [5, 2]]
+num_ants: 5
+max_itr: 100
+max_itr_ant: 100  # If null, there is no max_itr_ant! ---> null for TSP
+alpha: 0.1
+beta: 0.3
+pheromone_decay: 0.2
+starting_vertex: null  # If null, starting vertex will be random! ---> null or int for TSP
+one_time_visit: False  # True for TSP
+stopping_vertex: 2  # null for TSP
+visit_all_vertices: False  # True for TSP
+TSP: False

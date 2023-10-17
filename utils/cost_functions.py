@@ -104,3 +104,17 @@ def revenue(x: List[float]) -> float:
         R = -(2 * y**2) - (3 * z**2) + (4 * y * z) + (10000 * y) + (16000 * z)
         f = -R
         return f
+
+# This cost function calculates the Euclidean distances between different vertices for ACO algorithm.
+# E.g., the distance between (0, 2) and (3, 6) is 5.
+def calculate_distances(vertices) -> float:
+    num_vertices = len(vertices)
+    distance_matrix = [[0 for _ in range(num_vertices)] for _ in range(num_vertices)]
+
+    for i in range(num_vertices):
+        for j in range(num_vertices):
+            if i != j:
+                distance_matrix[i][j] = np.linalg.norm(np.array(vertices[i]) - np.array(vertices[j]))  # Euclidean distance
+
+    graph = distance_matrix
+    return graph

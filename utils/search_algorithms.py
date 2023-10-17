@@ -323,6 +323,110 @@ def ga(cost_function: Callable, population_size: int, max_itr: int, mutation_rat
     return best_solution, best_cost, history['best_solutions'], history['best_costs'], chromosomes
 
 ##############################################################################################################
+############ Ant Colony Optimization (ACO) ###################################################################
+##############################################################################################################
+def aco(cost_function: Callable, vertices: List[List[float]], num_ants: int, max_itr: int, max_itr_ant: int, alpha: float, beta: float,
+        pheromone_decay: float, starting_vertex: Optional[int] = None, stopping_vertex: Optional[int] = None,
+        one_time_visit: Optional[bool] = False, visit_all_vertices: Optional[bool] = False,
+        TSP: Optional[bool] = False,) -> Tuple[np.array, float, List[np.array], List[float]]:
+    
+    graph = cost_function(vertices)
+    num_vertices = len(vertices)
+    
+    # Initialize the pheromones of all edges to equal amount (small positive random values at the start of ACO algorithm)
+    # pheromone = [[0.5] * num_vertices for _ in range(num_vertices)]
+    pheromone = [[np.random.uniform(0, 1)] * num_vertices for _ in range(num_vertices)]
+    
+    best_solution = []
+    best_cost = float('inf')
+    
+    # Create a tqdm progress bar
+    progress_bar = tqdm(total=max_itr, desc='Iterations')
+
+    itr = 0
+    while (itr <= max_itr):
+        solutions = []
+        
+        for ant in range(num_ants):
+            if starting_vertex is None:
+                current_vertex = random.randint(0, num_vertices - 1)  # Placing each ant in a vertex selected randomly
+                starting_vertex_this_ant = current_vertex
+            else:
+                current_vertex = starting_vertex  # Place all ants at the source vertex
+                starting_vertex_this_ant = starting_vertex
+            visited = [False] * num_vertices
+            visited[current_vertex] = True
+            solution = [current_vertex]
+            solution_cost = 0
+            
+            itr_ant = 0
+            while True:
+                probabilities = []
+                denominator = 0
+
+                for vertex in range(num_vertices):
+                    if (((not visited[vertex]) and one_time_visit) or (not one_time_visit)) and (vertex != current_vertex):
+                        pheromone_value = pheromone[current_vertex][vertex]
+                        distance = graph[current_vertex][vertex]
+                        probability = (pheromone_value ** alpha) * ((1.0 / distance) ** beta)
+                        probabilities.append((vertex, probability))
+                        denominator += probability
+                    else:
+                        probabilities.append((vertex, 0))
+
+                probabilities = [(node, prob / denominator) for node, prob in probabilities]
+                probabilities = [prob for (_, prob) in probabilities]
+                next_vertex = random.choices(range(num_vertices), probabilities)[0]
+                visited[next_vertex] = True
+                solution.append(next_vertex)
+                solution_cost += graph[current_vertex][next_vertex]
+                current_vertex = next_vertex
+                
+                # Termination of ant
+                if visit_all_vertices:
+                    if len(np.unique(solution)) == num_vertices:
+                        if TSP:
+                            solution.append(starting_vertex_this_ant)
+                            solution_cost += graph[current_vertex][starting_vertex_this_ant]
+                        if stopping_vertex is None:
+                            break
+                        elif current_vertex == stopping_vertex:
+                            break
+                elif current_vertex == stopping_vertex:
+                    break
+                
+                if (max_itr_ant is not None) and (itr_ant > max_itr_ant):
+                    break
+                
+                itr_ant += 1
+                
+            # Update the best cost and the best solution (path)
+            if solution_cost < best_cost:
+                best_solution = solution
+                best_cost = solution_cost
+
+            solutions.append((solution, solution_cost))
+
+        # Decrement (evaporate) the pheromones gradually
+        for i in range(num_vertices):
+            for j in range(num_vertices):
+                pheromone[i][j] = (1.0 - pheromone_decay) * pheromone[i][j]
+
+        # Update (strengthen) the pheromones gradually
+        for solution, solution_cost in solutions:
+            for i in range(len(solution) - 1):
+                pheromone[solution[i]][solution[i + 1]] += 1.0 / solution_cost
+                pheromone[solution[i + 1]][solution[i]] += 1.0 / solution_cost
+
+        # Update the tqdm progress bar
+        progress_bar.update(1)  # Increment the progress bar by 1 unit
+        itr += 1
+        
+    progress_bar.close()
+    
+    return best_solution, best_cost
+
+##############################################################################################################
 ############ Helper Functions ################################################################################
 ##############################################################################################################
 def bound_solution_in_x_range(x: List[float], x_range: List[List[float]]) -> List[float]:
